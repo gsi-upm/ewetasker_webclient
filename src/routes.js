@@ -7,6 +7,39 @@ function Loading() {
   return <div>Loading...</div>;
 }
 
+const Dashboard = Loadable({
+  loader: () => import('./views/Dashboard'),
+  loading: Loading,
+});
+
+const Channels = Loadable({
+  loader: () => import('./views/Channels/Channels/Channels'),
+  loading: Loading,
+});
+
+const ChannelImport = Loadable({
+  loader: () => import('./views/Channels/ChannelImport/ChannelImport'),
+  loading: Loading,
+});
+
+const Rules = Loadable({
+  loader: () => import('./views/Rules/Rules/Rules'),
+  loading: Loading,
+});
+
+// https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
+const routes = [
+  { path: '/', exact: true, name: 'Home', component: DefaultLayout },
+  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/channels', exact: true, name: 'Channels', component: Channels },
+  { path: '/channels/import', name: 'Import', component: ChannelImport },
+  { path: '/rules', exact: true, name: 'Rules', component: Rules },
+
+];
+
+export default routes;
+
+/*
 const Breadcrumbs = Loadable({
   loader: () => import('./views/Base/Breadcrumbs'),
   loading: Loading,
@@ -216,4 +249,5 @@ const routes = [
   { path: '/charts', name: 'Charts', component: Charts },
 ];
 
-export default routes;
+
+export default routes;*/

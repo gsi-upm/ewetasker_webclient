@@ -1,7 +1,54 @@
 export default {
+  items : [
+    {
+      title: true,
+      name: 'Automation',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
+    },
+    {
+      name: 'Home',
+      url: '/home',
+      icon: 'icon-home',
+    },
+    {
+      name: 'Channels',
+      url: '/channels',
+      icon: 'icon-puzzle',
+    },
+    {
+      name: 'Rules',
+      url: '/rules',
+      icon: 'icon-layers',
+    },
+    {
+      name: 'Devices',
+      url: '/devices',
+      icon: 'fa fa-microchip',
+    },
+    {
+      title: true,
+      name: 'Administration',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
+    },
+    {
+      name: 'Settings',
+      url: '/settings',
+      icon: 'icon-settings',
+    },
+  ],
+};
+/*export default {
   items: [
     {
-      name: 'Dashboard',
+      name: 'TitoMorenito',
       url: '/dashboard',
       icon: 'icon-speedometer',
       badge: {
@@ -269,4 +316,4 @@ export default {
       variant: 'danger',
     },
   ],
-};
+};*/

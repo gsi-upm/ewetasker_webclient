@@ -1,0 +1,13 @@
+.RuleItem{
+    cursor: pointer !important;
+}
+
+.RuleItem > a:hover {
+    color: #20a8d8 !important;
+    text-decoration: none !important;
+}
+
+.rule-icon{
+    width: 56px !important;
+    height: 56px !important;
+}

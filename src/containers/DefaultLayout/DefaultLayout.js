@@ -52,9 +52,7 @@ class DefaultLayout extends Component {
               </Switch>
             </Container>
           </main>
-          <AppAside fixed hidden>
-            <DefaultAside />
-          </AppAside>
+
         </div>
         <AppFooter>
           <DefaultFooter />
