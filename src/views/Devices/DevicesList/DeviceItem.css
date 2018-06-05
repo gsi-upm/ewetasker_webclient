@@ -1,0 +1,8 @@
+.DeviceItem{
+    cursor: pointer !important;
+}
+
+.DeviceItem > a:hover {
+    color: #20a8d8 !important;
+    text-decoration: none !important;
+}
