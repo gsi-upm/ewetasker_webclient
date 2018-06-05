@@ -120,3 +120,14 @@ export function importChannel(channel){
 
     return request;
 }
+
+export function deleteCustomChannel(channel_uri){
+    const request = axios.delete('http://localhost:5000/channels/custom/delete/' + channel_uri)
+        .then(function (response){
+            return response.status === 200;
+        })
+        .catch(function (error){
+            console.log(error)
+        })
+    return request;
+}

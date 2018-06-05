@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ChannelItem from '../../Channels/Channels/ChannelItem';
+import DeviceItem from './DeviceItem';
 import { getCategoryChannels, getCustomCategoryChannels } from '../../../data/api/ApiConnect';
 import { Col, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
@@ -52,7 +53,7 @@ class Devices extends Component {
         );
 
         let devicesList = this.state.devices.map((device, index) => 
-            <ChannelItem onClickRoute='/devices/edit' key={index} channel={device} />
+            <DeviceItem onClickRoute='/devices/edit' key={index} device={device} />
         );
 
         return (

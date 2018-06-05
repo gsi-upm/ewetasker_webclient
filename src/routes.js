@@ -37,6 +37,11 @@ const Devices = Loadable({
   loading: Loading,
 });
 
+const DevicesEdit = Loadable({
+  loader: () => import('./views/Devices/DevicesEdit/DevicesEdit'),
+  loading: Loading,
+});
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -46,6 +51,7 @@ const routes = [
   { path: '/rules', exact: true, name: 'Rules', component: Rules },
   { path: '/devices', exact: true, name: 'Devices', component: Devices },
   { path: '/devices/import', name: 'Import', component: ChannelImport },
+  { path: '/devices/edit', name: 'Edit', component: DevicesEdit },
 
 ];
 
