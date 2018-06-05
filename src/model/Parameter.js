@@ -5,5 +5,6 @@ export class Parameter {
         this.label = "";
         this.comment = "";
         this.value = "";
+        this.datatype = "";
     }
 }

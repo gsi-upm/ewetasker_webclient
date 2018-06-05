@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import ChannelParameterItem from './ChannelParameterItem';
+import { importChannel } from '../../../data/api/ApiConnect';
 
 import {
-    Badge,
     Button,
     Card,
     CardBody,
@@ -12,7 +12,6 @@ import {
     Col,
     Form,
     FormGroup,
-    FormText,
     Input,
     Label,
     Row,
@@ -22,22 +21,58 @@ class ChannelImport extends Component{
 
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {
+            showAlert: false
+        };
         this.cancel = this.cancel.bind(this);
+        this.handleChangeChannel = this.handleChangeChannel.bind(this);
+        this.import = this.import.bind(this);
     }
+
+    import(){
+        var importChannelCallback = function(result){
+            if(result){
+                this.setState({
+                    success: true,
+                    showAlert: true
+                })
+            }else{
+                this.setState({
+                    success: false,
+                    showAlert: true
+                })
+            }
+        };
+        importChannelCallback = importChannelCallback.bind(this);
+        const {channel} = this.props.location.state;
+        importChannel(channel).then(importChannelCallback);
+    }
+
     cancel(){
         this.setState({
             cancel: true
         })
     }
+
+    handleChangeChannel(event){
+        const {channel} = this.props.location.state;
+        channel[event.target.name] = event.target.value;
+    }
+
     render () {
 
         // Check if a channel has been passed, and redirect to channels if hasn't
         if (typeof this.props.location.state === 'undefined' || this.state.cancel){
-            return <Redirect push to="/channels" />;
+            return <Redirect push to="/devices" />;
         }
 
+        // Check if a channel has been succesfully imported
+        if (this.state.showAlert && this.state.success){
+            console.log("trueando");
+            return <Redirect push to={{ pathname: '/devices', state: { showAlert: true } }} />;
+        }
         const {channel} = this.props.location.state
+
         let parametersList = channel.parameters.map((parameter, index) =>
             <ChannelParameterItem parameter={parameter} key={index} />
         );
@@ -61,31 +96,32 @@ class ChannelImport extends Component{
                         </FormGroup>
                         <FormGroup row>
                             <Col md="3">
-                            <Label htmlFor="name-input">Name</Label>
+                            <Label htmlFor="label">Name</Label>
                             </Col>
                             <Col xs="12" md="9">
-                            <Input type="text" id="name-input" name="name-input" placeholder="Add a name for your channel" />
+                            <Input type="text" id="label" name="label" placeholder="Add a name for your channel" onChange={this.handleChangeChannel}/>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Col md="3">
-                            <Label htmlFor="description-input">Description</Label>
+                            <Label htmlFor="comment">Description</Label>
                             </Col>
                             <Col xs="12" md="9">
-                            <Input type="email" id="description-input" name="description-input" placeholder="Add a description for your channel"/>
+                            <Input type="text" id="comment" name="comment" placeholder="Add a description for your channel" onChange={this.handleChangeChannel} />
                             </Col>
                         </FormGroup>
                         {parametersList}
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                        <Button type="submit" size="sm" color="primary" onClick={this.import}><i className="fa fa-dot-circle-o"></i> Import</Button>
                         <Button type="reset" size="sm" color="danger" onClick={this.cancel}><i className="fa fa-ban"></i> Cancel</Button>
                     </CardFooter>
                     </Card>
                     </Col>
                 </Row>
             </div>
+
         );
     }
 }

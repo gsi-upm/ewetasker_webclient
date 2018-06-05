@@ -30,6 +30,11 @@ export default {
       icon: 'fa fa-microchip',
     },
     {
+      name: 'Services',
+      url: '/services',
+      icon: 'fa fa-cloud',
+    },
+    {
       title: true,
       name: 'Administration',
       wrapper: {            // optional wrapper object

@@ -1,0 +1,7 @@
+{
+    "name": "ChannelEdit",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./ChannelEdit.js"
+  }
+  

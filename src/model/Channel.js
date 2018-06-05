@@ -5,6 +5,7 @@ export class Channel {
         this.label = "";
         this.comment = "";
         this.logo = "";
+        this.type = "";
         this.actions = [];
         this.events = [];
         this.parameters = [];

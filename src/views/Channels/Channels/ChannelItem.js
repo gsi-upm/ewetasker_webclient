@@ -7,13 +7,10 @@ import './ChannelItem.css';
 
 class ChannelItem extends Component{
 
-    onClick(){
-        console.log("click");
-    }
     render () {
         return (
-            <Col xs="12" sm="6" lg="4" onClick={this.onClick} className="ChannelItem">
-                <Link to={{ pathname: '/channels/import', state: { channel: this.props.channel } }}>
+            <Col xs="12" sm="6" lg="4"className="ChannelItem">
+                <Link to={{ pathname: this.props.onClickRoute, state: { channel: this.props.channel } }}>
                     <ChannelWidget header={this.props.channel.label} mainText={this.props.channel.comment} icon="fa fa-tv" color="primary" />
                 </Link>
 

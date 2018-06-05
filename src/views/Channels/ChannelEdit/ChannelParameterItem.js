@@ -8,13 +8,11 @@ class ChannelParameterItem extends Component{
         super(props);
         this.onChange = this.onChange.bind(this);
     }
-
-    // FIXME: Change a prop from inside a component is a bad practice
     onChange(e){
-        this.props.parameter.value = e.target.value;
+        this.props.onChange();
     }
-
     render () {
+        console.log("buenaaas");
         return (
             <FormGroup row>
                 <Col md="3">

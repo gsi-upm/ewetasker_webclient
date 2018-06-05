@@ -17,6 +17,11 @@ const Channels = Loadable({
   loading: Loading,
 });
 
+const ChannelEdit = Loadable({
+  loader: () => import('./views/Channels/ChannelEdit/ChannelEdit'),
+  loading: Loading,
+});
+
 const ChannelImport = Loadable({
   loader: () => import('./views/Channels/ChannelImport/ChannelImport'),
   loading: Loading,
@@ -27,13 +32,20 @@ const Rules = Loadable({
   loading: Loading,
 });
 
+const Devices = Loadable({
+  loader: () => import('./views/Devices/DevicesList/Devices'),
+  loading: Loading,
+});
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/channels', exact: true, name: 'Channels', component: Channels },
-  { path: '/channels/import', name: 'Import', component: ChannelImport },
+  { path: '/channels/edit', name: 'Edit', component: ChannelEdit },
   { path: '/rules', exact: true, name: 'Rules', component: Rules },
+  { path: '/devices', exact: true, name: 'Devices', component: Devices },
+  { path: '/devices/import', name: 'Import', component: ChannelImport },
 
 ];
 

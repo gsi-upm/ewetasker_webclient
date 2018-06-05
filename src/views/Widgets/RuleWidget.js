@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Card, CardBody, CardFooter } from 'reactstrap';
 import classNames from 'classnames';
 import { mapToCssModules } from 'reactstrap/lib/utils';
-import { Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 
 const propTypes = {
   header: PropTypes.string,
