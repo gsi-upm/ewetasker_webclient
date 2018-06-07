@@ -1,5 +1,8 @@
 import { Channel } from '../../model/Channel';
 import { Parameter } from '../../model/Parameter';
+import { Action } from '../../model/Action';
+import { Event } from '../../model/Event';
+
 import axios from 'axios';
 
 export function getChannels(){
@@ -11,6 +14,7 @@ export function getChannels(){
                 channelObj.label = channel["rdfs:label"];
                 channelObj.comment = channel["rdfs:comment"];
                 channelObj.logo = channel["foaf:logo"];
+                
                 var parameters = channel["parameters"].map(function (parameter){
                     var parameterObj = new Parameter();
                     parameterObj.id = parameter["@id"];
@@ -18,7 +22,28 @@ export function getChannels(){
                     parameterObj.comment = parameter["rdfs:comment"];
                     return parameterObj;
                 });
+
+                var actions = channel["actions"].map(function (action){
+                    var actionObj = new Action();
+                    actionObj.id = action["@id"];
+                    actionObj.label = action["rdfs:label"];
+                    actionObj.comment = action["rdfs:comment"];
+                    return actionObj;
+                });
+
+                var events = channel["events"].map(function (event){
+                    var eventnObj = new Event();
+                    eventnObj.id = event["@id"];
+                    eventnObj.label = event["rdfs:label"];
+                    eventnObj.comment = event["rdfs:comment"];
+                    return eventnObj;
+                });
+
+
                 channelObj.parameters = parameters;
+                channelObj.events = events;
+                channelObj.actions = actions;
+
                 return channelObj;
             });
             return channels;
