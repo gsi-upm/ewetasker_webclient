@@ -6,3 +6,8 @@
     color: #20a8d8 !important;
     text-decoration: none !important;
 }
+
+.ChannelItem i {
+    width: 56px !important;
+    text-align: center !important;
+}

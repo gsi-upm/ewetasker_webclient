@@ -28,6 +28,7 @@ export function getChannels(){
                     actionObj.id = action["@id"];
                     actionObj.label = action["rdfs:label"];
                     actionObj.comment = action["rdfs:comment"];
+                    actionObj.logo = channel["foaf:logo"];
                     return actionObj;
                 });
 
@@ -36,6 +37,7 @@ export function getChannels(){
                     eventnObj.id = event["@id"];
                     eventnObj.label = event["rdfs:label"];
                     eventnObj.comment = event["rdfs:comment"];
+                    eventnObj.logo = channel["foaf:logo"];
                     return eventnObj;
                 });
 

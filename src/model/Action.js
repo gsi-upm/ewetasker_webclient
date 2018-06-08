@@ -4,6 +4,7 @@ export class Action {
         this.id = "";
         this.label = "";
         this.comment = "";
+        this.logo = "";
         this.inputParameters = [];
         this.outputParameters = [];
     }

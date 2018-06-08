@@ -10,8 +10,8 @@ class ChannelItem extends Component{
     render () {
 
         return (
-            <Col xs="12" sm="6" lg="4"className="ChannelItem">
-                <ChannelCompleteWidget header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon="fa fa-tv" color="primary" />
+            <Col sm="4" className="ChannelItem">
+                <ChannelCompleteWidget header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color="primary" />
             </Col>
         );
     }
