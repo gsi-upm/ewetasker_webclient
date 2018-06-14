@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import RuleDroppable from './RuleDroppable';
 import RuleCreateChannelItem from './RuleCreateChannelItem';
+import RuleChooseDeviceModal from './Modals/RuleChooseDeviceModal';
+
 import { DragDropContext } from 'react-beautiful-dnd';
 import {
     Card,
@@ -21,11 +23,20 @@ class RuleCreate extends Component {
 
     constructor(props) {
         super(props);
+        
+        this.toogleDeviceModal = this.toogleDeviceModal.bind(this);
 
         this.state = {
             selectedEvents: [],
             selectedActions: []
         }
+    }
+
+    toogleDeviceModal(){
+        console.log("holaa");
+        this.setState({
+            chooseDeviceModal: !this.state.chooseDeviceModal
+        })
     }
 
     onDragEnd = result => {
@@ -67,6 +78,8 @@ class RuleCreate extends Component {
             this.setState({
                 selectedActions: result.droppableActions
             });
+
+            this.toogleDeviceModal()
         } else {
             const result = this.moveToEvents(draggableId, source.droppableId, source, destination);
 
@@ -227,6 +240,9 @@ class RuleCreate extends Component {
                                         {channelsList}
                                     </Row>
                                 </Col>
+
+                                {/** Modals **/}
+                                <RuleChooseDeviceModal modal={this.state.chooseDeviceModal} toogleDeviceModal={this.toogleDeviceModal}/>
                             </DragDropContext>
                         </Row>
                     </Form>

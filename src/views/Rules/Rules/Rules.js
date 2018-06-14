@@ -253,7 +253,6 @@ class Rules extends Component {
             return <div className="animated fadeIn"></div>
         }
 
-
         return (
             <div className="animated fadeIn">
                 <Col xs="12" className="mb-4">
