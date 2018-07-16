@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import ChannelItem from './ChannelItem';
 import { getChannels } from '../../../data/api/ApiConnect';
 
@@ -43,9 +43,13 @@ class Channels extends Component {
         );
         return (
             <div className="animated fadeIn">
+                <Row>
                 <Col xs="12" className="mb-4">
+                <Row>
                    {channelsList} 
+                   </Row>
                 </Col>
+                </Row>
             </div>
         )
     }

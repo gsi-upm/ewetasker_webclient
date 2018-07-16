@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChannelItem from '../../Channels/Channels/ChannelItem';
+import ChannelItem from './ChannelItem';
 import DeviceItem from './DeviceItem';
 import { getCategoryChannels, getCustomCategoryChannels } from '../../../data/api/ApiConnect';
 import { Col, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
@@ -32,6 +32,7 @@ class Devices extends Component {
           });
         };
         getChannelsCallback = getChannelsCallback.bind(this);
+        // FIXME: Hardcoded route
         getCategoryChannels("http://gsi.dit.upm.es/ontologies/ewe-device/ns/Device").then(getChannelsCallback);
         
         var getDevicesCallback = function(devices){

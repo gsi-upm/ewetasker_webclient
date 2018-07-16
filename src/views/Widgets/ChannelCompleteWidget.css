@@ -1,0 +1,15 @@
+.actions, .events {
+    margin-top: 10% !important;
+}
+
+.badgeChannel{
+    float: right;
+}
+
+.list-group-item{
+    padding: 0.45rem 1.25rem !important;
+}
+
+.channelDescription{
+    margin-top: 1% !important;
+}
