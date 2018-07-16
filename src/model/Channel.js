@@ -9,5 +9,7 @@ export class Channel {
         this.actions = [];
         this.events = [];
         this.parameters = [];
+        this.selectedAction = "";
+        this.selectedEvent = "";
     }
 }

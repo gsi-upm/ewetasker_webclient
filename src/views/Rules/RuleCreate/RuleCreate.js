@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import RuleDroppable from './RuleDroppable';
 import RuleCreateChannelItem from './RuleCreateChannelItem';
-import RuleChooseDeviceModal from './Modals/RuleChooseDeviceModal';
+import RuleChooseSubchannelModal from './Modals/RuleChooseSubchannelModal';
 
 import { DragDropContext } from 'react-beautiful-dnd';
+import { createNewRule } from '../../../data/api/ApiConnect';
+
 import {
+    Button,
     Card,
     CardHeader,
     CardBody,
+    CardFooter,
     Form,
     FormGroup,
     Label,
@@ -23,17 +27,49 @@ class RuleCreate extends Component {
 
     constructor(props) {
         super(props);
-        
+
         this.toogleDeviceModal = this.toogleDeviceModal.bind(this);
+        this.createRule = this.createRule.bind(this);
+        this.confirm = this.confirm.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.createRule = this.createRule.bind(this);
 
         this.state = {
             selectedEvents: [],
-            selectedActions: []
+            selectedActions: [],
+            selectedEventsSubchannels: [],
+            selectedActionsSubchannels: [],
+            selectedChannel: "",
+            ruleName: "",
+            ruleDescription: ""
         }
     }
 
-    toogleDeviceModal(){
-        console.log("holaa");
+    onChangeName(e){
+        this.setState({
+            ruleName: e.target.value
+        })
+    }
+
+    onChangeDescription(e){
+        this.setState({
+            ruleDescription: e.target.value
+        })
+    }
+    confirm(selectedSubchannel, action) {
+        if (action) {
+            this.state.selectedActionsSubchannels.push(selectedSubchannel);
+        } else {
+            this.state.selectedEventsSubchannels.push(selectedSubchannel);
+        }
+    }
+
+    createRule(){
+        createNewRule(this.state.ruleName, this.state.ruleDescription, this.state.selectedActionsSubchannels, this.state.selectedEventsSubchannels);
+    }
+
+    toogleDeviceModal() {
         this.setState({
             chooseDeviceModal: !this.state.chooseDeviceModal
         })
@@ -86,13 +122,16 @@ class RuleCreate extends Component {
             this.setState({
                 selectedEvents: result.droppableEvents
             });
+
+            this.toogleDeviceModal()
         }
 
 
     };
 
     remove(itemId) {
-
+        // TODO
+        /*
         // FIXME: could be improved
         // if it is an action, remove it
         for (var action of this.state.selectedActions) {
@@ -111,7 +150,7 @@ class RuleCreate extends Component {
         this.setState({
             selectedActions: this.state.selectedActions,
             selectedEvents: this.state.selectedEvents
-        });
+        });*/
     }
 
 
@@ -132,6 +171,7 @@ class RuleCreate extends Component {
                     if (action.id === actionId) {
                         // create a copy of the selected action
                         selectedAction = Object.assign({}, action);
+                        selectedChannel.selectedAction = action;
                         selectedAction.id = selectedAction.id + "_copy";
                     }
                 }
@@ -143,6 +183,9 @@ class RuleCreate extends Component {
         destClone.push(selectedAction);
         this.state.selectedActions.push(selectedAction);
 
+        this.setState({
+            selectedChannel: selectedChannel
+        });
         const result = {};
         result[droppableSource.droppableId] = selectedChannel.actions;
         result[droppableDestination.droppableId] = destClone;
@@ -164,8 +207,9 @@ class RuleCreate extends Component {
                 // get selected event
                 for (var event of channel.events) {
                     if (event.id === eventId) {
-                         // create a copy of the selected event
+                        // create a copy of the selected event
                         selectedEvent = Object.assign({}, event);
+                        selectedChannel.selectedEvent = event;
                         selectedEvent.id = selectedEvent.id + "_copy";
                     }
                 }
@@ -174,6 +218,9 @@ class RuleCreate extends Component {
         const destClone = Array.from(this.state.selectedEvents);
         destClone.push(selectedEvent);
         this.state.selectedEvents.push(selectedEvent);
+        this.setState({
+            selectedChannel: selectedChannel
+        });
 
         const result = {};
         result[droppableSource.droppableId] = selectedChannel.events;
@@ -189,65 +236,72 @@ class RuleCreate extends Component {
         ));
 
         return (
-            <Row>
-                <Col xs="12">
-                    <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                        <Row>
-                            {/** Rule general info */}
-                            <Col sm="4">
-                                <FormGroup row>
-                                    <Col md="3">
-                                        <Label htmlFor="label">Name</Label>
+            <div>
+                <CardBody>
+                    <Row>
+                        <Col xs="12">
+                            <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
+                                <Row>
+                                    {/** Rule general info */}
+                                    <Col sm="4">
+                                        <FormGroup row>
+                                            <Col md="3">
+                                                <Label htmlFor="label">Name</Label>
+                                            </Col>
+                                            <Col xs="12" md="9">
+                                                <Input type="text" id="label" name="label" placeholder="Add a name for your rule" onChange={this.onChangeName} />
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup row>
+                                            <Col md="3">
+                                                <Label htmlFor="label">Description</Label>
+                                            </Col>
+                                            <Col xs="12" md="9">
+                                                <Input type="textarea" id="description" name="description" placeholder="Add a description for your rule" onChange={this.onChangeDescription} />
+                                            </Col>
+                                        </FormGroup>
                                     </Col>
-                                    <Col xs="12" md="9">
-                                        <Input type="text" id="label" name="label" placeholder="Add a name for your rule" />
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    <Col md="3">
-                                        <Label htmlFor="label">Description</Label>
-                                    </Col>
-                                    <Col xs="12" md="9">
-                                        <Input type="textarea" id="description" name="description" placeholder="Add a description for your rule" />
-                                    </Col>
-                                </FormGroup>
-                            </Col>
-                            <DragDropContext onDragEnd={this.onDragEnd}>
-                                {/** Droppables */}
-                                <Col sm="4">
-                                    <Card>
-                                        <CardHeader>
-                                            <strong>If...</strong>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <RuleDroppable droppableId="droppableEvents" selected={this.state.selectedEvents} />
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                <Col sm="4">
-                                    <Card>
-                                        <CardHeader>
-                                            <strong>Then...</strong>
-                                        </CardHeader>
-                                        <CardBody>
-                                            <RuleDroppable droppableId="droppableActions" selected={this.state.selectedActions} />
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                                {/** Draggables */}
-                                <Col xs="12" >
-                                    <Row>
-                                        {channelsList}
-                                    </Row>
-                                </Col>
+                                    <DragDropContext onDragEnd={this.onDragEnd}>
+                                        {/** Droppables */}
+                                        <Col sm="4">
+                                            <Card>
+                                                <CardHeader>
+                                                    <strong>If...</strong>
+                                                </CardHeader>
+                                                <CardBody>
+                                                    <RuleDroppable droppableId="droppableEvents" selected={this.state.selectedEvents} />
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                        <Col sm="4">
+                                            <Card>
+                                                <CardHeader>
+                                                    <strong>Then...</strong>
+                                                </CardHeader>
+                                                <CardBody>
+                                                    <RuleDroppable droppableId="droppableActions" selected={this.state.selectedActions} />
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                        {/** Draggables */}
+                                        <Col xs="12" >
+                                            <Row>
+                                                {channelsList}
+                                            </Row>
+                                        </Col>
 
-                                {/** Modals **/}
-                                <RuleChooseDeviceModal modal={this.state.chooseDeviceModal} toogleDeviceModal={this.toogleDeviceModal}/>
-                            </DragDropContext>
-                        </Row>
-                    </Form>
-                </Col>
-            </Row>
+                                        {/** Modals **/}
+                                        <RuleChooseSubchannelModal confirm={this.confirm} modal={this.state.chooseDeviceModal} toogleDeviceModal={this.toogleDeviceModal} channel={this.state.selectedChannel} />
+                                    </DragDropContext>
+                                </Row>
+                            </Form>
+                        </Col>
+                    </Row>
+                </CardBody>
+                <CardFooter>
+                    <Button className="btn-pill" type="submit" size="sm" color="primary" onClick={this.createRule}><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                </CardFooter>
+            </div>
         );
     }
 }

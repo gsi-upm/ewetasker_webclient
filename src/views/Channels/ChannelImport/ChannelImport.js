@@ -106,7 +106,7 @@ class ChannelImport extends Component{
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button type="submit" size="sm" color="primary" onClick={this.import}><i className="fa fa-dot-circle-o"></i> Import</Button>
+                        <Button type="submit" size="sm" color="primary" onClick={this.import}><i className="fa fa-dot-circle-o"></i> Import</Button>{' '}
                         <Button type="reset" size="sm" color="danger" onClick={this.cancel}><i className="fa fa-ban"></i> Cancel</Button>
                     </CardFooter>
                     </Card>

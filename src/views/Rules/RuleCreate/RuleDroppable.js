@@ -12,7 +12,10 @@ class RuleDroppable extends Component {
 
     constructor(props){
         super(props);
-
+        let colors = ["bg-primary", "bg-secondary", "bg-success","bg-danger", "bg-warning", "bg-info"];
+        this.state = {
+            color: colors[Math.floor(Math.random()*colors.length)]
+        };
     }
 
     render() {
@@ -35,7 +38,7 @@ class RuleDroppable extends Component {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                             >
-                                                <i className={"bg-primary p-2 font-2xl mr-3 float-left " + item.logo}></i>
+                                                <i className={this.state.color + " p-2 font-2xl mr-3 float-left " + item.logo}></i>
                                                 <div className="text-muted font-weight-bold font-xs">{item.label}</div>
                                                 <div className="channelDescription text-muted font-xs">{item.comment}</div>
                                             </div>
