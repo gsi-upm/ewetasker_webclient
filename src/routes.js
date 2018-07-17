@@ -42,6 +42,15 @@ const DevicesEdit = Loadable({
   loading: Loading,
 });
 
+const Services = Loadable({
+  loader: () => import('./views/Services/ServicesList/Services'),
+  loading: Loading,
+});
+
+const ServicesEdit = Loadable({
+  loader: () => import('./views/Services/ServicesEdit/ServicesEdit'),
+  loading: Loading,
+});
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -52,6 +61,9 @@ const routes = [
   { path: '/devices', exact: true, name: 'Devices', component: Devices },
   { path: '/devices/import', name: 'Import', component: ChannelImport },
   { path: '/devices/edit', name: 'Edit', component: DevicesEdit },
+  { path: '/services', exact: true, name: 'Services', component: Services },
+  { path: '/services/import', name: 'Import', component: ChannelImport },
+  { path: '/services/edit', name: 'Edit', component: ServicesEdit },
 
 ];
 

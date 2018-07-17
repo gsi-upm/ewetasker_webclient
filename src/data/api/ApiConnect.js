@@ -2,11 +2,12 @@ import { Channel } from '../../model/Channel';
 import { Parameter } from '../../model/Parameter';
 import { Action } from '../../model/Action';
 import { Event } from '../../model/Event';
+import {api} from '../../vars.js';
 
 import axios from 'axios';
 
 export function getChannels(){
-    const request = axios.get('http://localhost:5050/channels/base')
+    const request = axios.get(api + '/channels/base')
         .then(function (response){
             var channels = response.data.channels.map(function (channel){
                 var channelObj = new Channel();
@@ -79,7 +80,7 @@ export function getChannels(){
 }
 
 export function getCategoryChannels(category_uri){
-    const request = axios.get('http://localhost:5050/channels/category/' + category_uri)
+    const request = axios.get(api + '/channels/category/' + category_uri)
         .then(function (response){
             var channels = response.data.channels.map(function (channel){
                 var channelObj = new Channel();
@@ -107,7 +108,7 @@ export function getCategoryChannels(category_uri){
 }
 
 export function getCustomCategoryChannels(category_uri){
-    const request = axios.get('http://localhost:5050/channels/custom/category/' + category_uri)
+    const request = axios.get(api + '/channels/custom/category/' + category_uri)
         .then(function (response){
             var channels = response.data.channels.map(function (channel){
                 var channelObj = new Channel();
@@ -137,7 +138,7 @@ export function getCustomCategoryChannels(category_uri){
 }
 
 export function getCustomSubChannels(channel_uri){
-    const request = axios.get('http://localhost:5050/channels/custom/base_channel/' + channel_uri)
+    const request = axios.get(api + '/channels/custom/base_channel/' + channel_uri)
         .then(function (response){
             var channels = response.data.channels.map(function (channel){
                 var channelObj = new Channel();
@@ -179,7 +180,7 @@ export function importChannel(channel){
         });
     }
         
-    const request = axios.post('http://localhost:5050/channels/import', {
+    const request = axios.post(api + '/channels/import', {
         "@context" : {
             "@base" : base,
             "@vocab" : "http://gsi.dit.upm.es/ontologies/ewe/ns/"
@@ -200,7 +201,7 @@ export function importChannel(channel){
 }
 
 export function deleteCustomChannel(channel_uri){
-    const request = axios.delete('http://localhost:5050/channels/custom/delete/' + channel_uri)
+    const request = axios.delete(api + '/channels/custom/delete/' + channel_uri)
         .then(function (response){
             return response.status === 200;
         })
@@ -288,7 +289,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
         });
     }*/
         
-    const request = axios.post('http://localhost:5050/rules/new', {
+    const request = axios.post(api + '/rules/new', {
         "@context" : {
             "@vocab" : "http://gsi.dit.upm.es/ontologies/ewe/ns/"
         },

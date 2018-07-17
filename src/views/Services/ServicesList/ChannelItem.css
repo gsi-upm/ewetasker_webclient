@@ -1,13 +1,13 @@
-.DeviceItem{
+.ChannelItem{
     cursor: pointer !important;
 }
 
-.DeviceItem > a:hover {
+.ChannelItem > a:hover {
     color: #20a8d8 !important;
     text-decoration: none !important;
 }
 
-.DeviceItem i {
+.ChannelItem i {
     width: 56px !important;
     text-align: center !important;
 }
