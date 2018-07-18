@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import gsi from '../../assets/img/brand/gsi.png';
 const propTypes = {
   children: PropTypes.node,
 };
@@ -15,7 +15,7 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span><a href="https://gsi.dit.upm.es">EWE Tasker</a> &copy; 2018 GSI.</span>
+        <span><a href='http://gsi.dit.upm.es'>EWE Tasker</a> &copy; 2018 GSI.  <img src={gsi} height='30px' alt='gsi-logo'/></span>
       </React.Fragment>
     );
   }

@@ -11,7 +11,7 @@ class ChannelItem extends Component{
 
         return (
             <Col sm="4" className="ChannelItem">
-                <ChannelCompleteWidget header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color="primary" />
+                <ChannelCompleteWidget onClickRoute='/channels/edit' channel={this.props.channel} header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color="primary" />
             </Col>
         );
     }

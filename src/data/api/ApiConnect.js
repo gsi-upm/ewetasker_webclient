@@ -248,7 +248,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
     }
 
     for(const subchannel of actionSubchannels){
-        var parameters = [];
+        parameters = [];
         for(const param of subchannel.parameters){
             // TODO: Select operation
             parameters.push({

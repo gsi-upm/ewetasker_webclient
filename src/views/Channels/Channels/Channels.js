@@ -39,7 +39,7 @@ class Channels extends Component {
           return <div className="animated fadeIn"></div>
         }
         let channelsList = this.state.channels.map((channel, index) => 
-            <ChannelItem onClickRoute='/channels/edit' key={index} channel={channel} />
+            <ChannelItem key={index} channel={channel} />
         );
         return (
             <div className="animated fadeIn">

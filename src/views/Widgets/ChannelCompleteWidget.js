@@ -4,6 +4,7 @@ import { Badge, Card, CardBody, CardFooter, Col, Collapse, ListGroup, ListGroupI
 import classNames from 'classnames';
 import { mapToCssModules } from 'reactstrap/lib/utils';
 import './ChannelCompleteWidget.css';
+import { Link } from 'react-router-dom';
 
 const propTypes = {
   header: PropTypes.string,
@@ -16,6 +17,8 @@ const propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   cssModule: PropTypes.object,
+  onClickRoute: PropTypes.string,
+  channel: PropTypes.object,
 };
 
 const defaultProps = {
@@ -29,7 +32,7 @@ const defaultProps = {
 
 class ChannelCompleteWidget extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       collapse: false
@@ -37,7 +40,7 @@ class ChannelCompleteWidget extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
-  toggle(){
+  toggle() {
     this.setState({
       collapse: !this.state.collapse
     })
@@ -72,47 +75,47 @@ class ChannelCompleteWidget extends Component {
       }
     };
 
-    let eventsList = this.props.events.map((event, index) => 
+    let eventsList = this.props.events.map((event, index) =>
       <ListGroupItem key={index}>{event.label}</ListGroupItem>
     );
 
-    let actionsList = this.props.actions.map((action, index) => 
+    let actionsList = this.props.actions.map((action, index) =>
       <ListGroupItem key={index}>{action.label}</ListGroupItem>
     );
 
     return (
-      <Card onClick={this.toggle}>
+      <Card onClick={this.toggle} >
         <CardBody className={card.classes} {...attributes}>
-        <Row>
-          <Col xs="12">
-          {blockIcon(card.icon)}
-          <div className={lead.classes}>{header}<Badge className="badgeChannel" color="success">Edit</Badge></div>
-          <div className="channelDescription text-muted font-xs">{mainText}</div>
-          </Col>
-          </Row>
-          <Collapse isOpen={this.state.collapse} >
           <Row>
             <Col xs="12">
-              <Row>
-              <Col xs="6">
-              <div className="events">
-              <h4 className="text-muted text-uppercase font-xs">Events</h4>
-              <ListGroup>
-                {eventsList}
-              </ListGroup>
-              </div>
-              </Col>
-              <Col xs="6">
-              <div className="actions">
-              <h4 className="text-muted text-uppercase font-xs">Actions</h4>
-              <ListGroup>
-                {actionsList}
-              </ListGroup>
-              </div>
-              </Col>
-              </Row>
-              </Col>
+              {blockIcon(card.icon)}
+              <div className={lead.classes}>{header}<Link to={{ pathname: this.props.onClickRoute, state: { channel: this.props.channel } }}><Badge className="badgeChannel" color="success">Edit</Badge></Link></div>
+              <div className="channelDescription text-muted font-xs">{mainText}</div>
+            </Col>
           </Row>
+          <Collapse isOpen={this.state.collapse} >
+            <Row>
+              <Col xs="12">
+                <Row>
+                  <Col xs="6">
+                    <div className="events">
+                      <h4 className="text-muted text-uppercase font-xs">Events</h4>
+                      <ListGroup>
+                        {eventsList}
+                      </ListGroup>
+                    </div>
+                  </Col>
+                  <Col xs="6">
+                    <div className="actions">
+                      <h4 className="text-muted text-uppercase font-xs">Actions</h4>
+                      <ListGroup>
+                        {actionsList}
+                      </ListGroup>
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </Collapse>
         </CardBody>
         {cardFooter()}
