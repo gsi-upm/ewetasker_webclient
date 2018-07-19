@@ -167,7 +167,7 @@ export function getCustomSubChannels(channel_uri){
 }
 
 export function importChannel(channel){
-
+    
     var parameters = [];
     var baseLastIndex = channel.id.lastIndexOf("/");
     const base = channel.id.substr(0, baseLastIndex+1);

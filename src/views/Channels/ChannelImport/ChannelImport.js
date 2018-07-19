@@ -56,12 +56,12 @@ class ChannelImport extends Component{
 
         // Check if a channel has been passed, and redirect to channels if hasn't
         if (typeof this.props.location.state === 'undefined' || this.state.cancel){
-            return <Redirect push to="/devices" />;
+            return <Redirect push to={this.props.location.pathname.replace('/import','')} />;
         }
 
         // Check if a channel has been succesfully imported
         if (this.state.showAlert && this.state.success){
-            return <Redirect push to={{ pathname: '/devices', state: { showAlert: true } }} />;
+            return <Redirect push to={{ pathname: this.props.location.pathname.replace('/import',''), state: { showAlert: true } }} />;
         }
         const {channel} = this.props.location.state
 
