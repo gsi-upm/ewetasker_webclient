@@ -48,6 +48,11 @@ export default {
       url: '/settings',
       icon: 'icon-settings',
     },
+    {
+      name: 'Logout',
+      url: '/logout',
+      icon: 'fa fa-window-close',
+    },
   ],
 };
 /*export default {

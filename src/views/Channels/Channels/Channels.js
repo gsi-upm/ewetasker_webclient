@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import ChannelItem from './ChannelItem';
 import { getChannels } from '../../../data/api/ApiConnect';
+import { Redirect } from 'react-router';
 
 class Channels extends Component {
 
@@ -35,6 +36,9 @@ class Channels extends Component {
       }
 
     render(){
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
         if (typeof this.state.channels === "undefined"){
           return <div className="animated fadeIn"></div>
         }

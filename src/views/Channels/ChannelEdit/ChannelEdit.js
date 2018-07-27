@@ -29,6 +29,10 @@ class ChannelEdit extends Component{
     }
     render () {
 
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
+
         // Check if a channel has been passed, and redirect to channels if hasn't
         if (typeof this.props.location.state === 'undefined' || this.state.cancel){
             return <Redirect push to="/channels" />;

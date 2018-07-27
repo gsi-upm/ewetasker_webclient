@@ -53,6 +53,10 @@ class DevicesEdit extends Component {
     
     render(){
 
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
+
         // Check if a devices has been passed, and redirect to devices if hasn't
         if (typeof this.props.location.state === 'undefined' || this.state.cancel){
             return <Redirect push to="/devices" />;

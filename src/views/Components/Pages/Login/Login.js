@@ -1,8 +1,58 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import { login } from '../../../../data/api/ApiConnect';
+import { sha256 } from 'js-sha256';
+import jwt from 'jsonwebtoken';
+import { isNull } from 'util';
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.state = {
+      username: '',
+      password: ''
+    };
+  }
+  
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    })
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  handleClick(event) {
+    var bodyFormData = new FormData();
+    bodyFormData.set('username', this.state.username);
+    bodyFormData.set('password', sha256(this.state.password));
+    login(bodyFormData).then(function(response){
+      console.log(response)
+      if (response !== 0) {
+        
+        console.log(response);
+        console.log("Login successfull");
+        sessionStorage.setItem('jwtToken', response);
+      }else {
+        console.log("Username password do not match");
+        alert("Username and password do not match")
+      }
+      window.location.reload();
+  });
+  }
+
   render() {
+    if (sessionStorage.getItem('jwtToken')!==null) {
+      return <Redirect push to="/" />;
+    }
+
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -19,7 +69,7 @@ class Login extends Component {
                           <i className="icon-user"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="text" placeholder="Username" />
+                      <Input type="text" placeholder="Username" onChange={this.onChangeUsername} />
                     </InputGroup>
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
@@ -27,14 +77,11 @@ class Login extends Component {
                           <i className="icon-lock"></i>
                         </InputGroupText>
                       </InputGroupAddon>
-                      <Input type="password" placeholder="Password" />
+                      <Input type="password" placeholder="Password" onChange={this.onChangePassword} />
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4">Login</Button>
-                      </Col>
-                      <Col xs="6" className="text-right">
-                        <Button color="link" className="px-0">Forgot password?</Button>
+                        <Button color="primary" className="px-4" onClick={(event) => this.handleClick(event)}>Login</Button>
                       </Col>
                     </Row>
                   </CardBody>
@@ -43,9 +90,10 @@ class Login extends Component {
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                      <Button color="primary" className="mt-3" active>Register Now!</Button>
+                      <p>Try Ewetasker capabilities to automate tasks in an easy way.</p>
+                      <Link to={{ pathname: '/register'}}>
+                        <Button color="primary" className="mt-3" active>Register Now!</Button>
+                      </Link>
                     </div>
                   </CardBody>
                 </Card>
@@ -57,5 +105,6 @@ class Login extends Component {
     );
   }
 }
+
 
 export default Login;

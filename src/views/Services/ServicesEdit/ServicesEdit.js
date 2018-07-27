@@ -53,6 +53,9 @@ class ServicesEdit extends Component {
     
     render(){
 
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
         // Check if a services has been passed, and redirect to services if hasn't
         if (typeof this.props.location.state === 'undefined' || this.state.cancel){
             return <Redirect push to="/services" />;

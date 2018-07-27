@@ -5,7 +5,7 @@ import RuleItem from './RuleItem';
 import { getChannels } from '../../../data/api/ApiConnect';
 import './Rules.css';
 import RuleCreate from '../RuleCreate/RuleCreate';
-
+import { Redirect } from 'react-router';
 
 class Rules extends Component {
 
@@ -43,6 +43,9 @@ class Rules extends Component {
 
 
     render() {
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
 
         if (typeof this.state.channels === "undefined") {
             return <div className="animated fadeIn"></div>

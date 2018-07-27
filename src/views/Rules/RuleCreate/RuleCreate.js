@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RuleDroppable from './RuleDroppable';
 import RuleCreateChannelItem from './RuleCreateChannelItem';
 import RuleChooseSubchannelModal from './Modals/RuleChooseSubchannelModal';
-
+import { Redirect } from 'react-router';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { createNewRule } from '../../../data/api/ApiConnect';
 
@@ -230,6 +230,10 @@ class RuleCreate extends Component {
     };
 
     render() {
+
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
 
         let channelsList = this.props.channels.map((channel, index) => (
             <RuleCreateChannelItem key={index} channel={channel} />

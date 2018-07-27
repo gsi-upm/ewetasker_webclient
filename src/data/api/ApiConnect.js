@@ -306,4 +306,26 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
     });
 
     return request;
+ }
+
+ export function login(bodyFormData){
+    const request = axios({ method: 'post', url: api + '/users/login', data: bodyFormData })
+      .then(function (response) {
+          return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return request;
+}
+
+export function signUp(bodyFormData){
+    const request = axios({ method: 'post', url: api + '/users/new', data: bodyFormData })
+      .then(function (response) {
+          return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    return request;
 }

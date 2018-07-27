@@ -5,6 +5,7 @@ import { getCategoryChannels, getCustomCategoryChannels } from '../../../data/ap
 import { Col, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 import ChannelImportedAlert from '../../Alerts/ChannelImportedAlert';
+import { Redirect } from 'react-router';
 
 class Services extends Component {
     constructor(props){
@@ -46,6 +47,9 @@ class Services extends Component {
     }   
 
     render (){
+        if (sessionStorage.getItem('jwtToken')===null) {
+            return <Redirect push to="/login" />;
+        }
         if (typeof this.state.channels === "undefined" || typeof this.state.services === "undefined"){
             return <div className="animated fadeIn"></div>
         }
