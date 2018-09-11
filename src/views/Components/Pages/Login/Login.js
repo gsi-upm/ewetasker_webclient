@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { login } from '../../../../data/api/ApiConnect';
 import { sha256 } from 'js-sha256';
 import jwt from 'jsonwebtoken';
-import { isNull } from 'util';
 class Login extends Component {
   constructor(props) {
     super(props);

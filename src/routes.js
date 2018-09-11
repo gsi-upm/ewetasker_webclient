@@ -51,16 +51,6 @@ const ServicesEdit = Loadable({
   loading: Loading,
 });
 
-const Login = Loadable({
-  loader: () => import('./views/Components/Pages/Login/Login'),
-  loading: Loading,
-});
-
-const Register = Loadable({
-  loader: () => import('./views/Components/Pages/Register/Register'),
-  loading: Loading,
-});
-
 const Logout = Loadable({
   loader: () => import('./views/Components/Pages/Logout/Logout'),
   loading: Loading,
@@ -70,7 +60,7 @@ const Logout = Loadable({
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/dashboard', exact: true, name: 'Dashboard', component: Dashboard },
   { path: '/channels', exact: true, name: 'Channels', component: Channels },
   { path: '/channels/edit', name: 'Edit', component: ChannelEdit },
   { path: '/rules', exact: true, name: 'Rules', component: Rules },
@@ -80,9 +70,7 @@ const routes = [
   { path: '/services', exact: true, name: 'Services', component: Services },
   { path: '/services/import', name: 'Import', component: ChannelImport },
   { path: '/services/edit', name: 'Edit', component: ServicesEdit },
-  { path: '/login', name: 'Login', component: Login },
-  { path: '/register', name: 'Register', component: Register },
-  { path: '/logout', name: 'Logout', component: Logout },
+  { path: '/logout', exact: true, name: 'Logout', component: Logout },
 ];
 
 export default routes;

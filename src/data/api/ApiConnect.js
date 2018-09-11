@@ -212,8 +212,8 @@ export function deleteCustomChannel(channel_uri){
 }
 
 
-export function createNewRule(label, comment, eventSubchannels, actionSubchannels){
-
+export function createNewRule(label, comment, eventSubchannels, actionSubchannels, userURL){
+    console.log("Api connect create new rule")
     var eventsJson = [];
     var actionsJson = [];
     //var baseLastIndex = channel.id.lastIndexOf("/");
@@ -296,7 +296,8 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
         "rdfs:label" : label,
         "rdfs:comment" : comment,
         "events" : eventsJson,
-        "actions" : actionsJson
+        "actions" : actionsJson,
+        "ewe:hasCreator": userURL
     })
     .then(function(response){
         return response.status === 200;

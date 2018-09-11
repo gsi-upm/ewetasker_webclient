@@ -5,6 +5,7 @@ import RuleChooseSubchannelModal from './Modals/RuleChooseSubchannelModal';
 import { Redirect } from 'react-router';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { createNewRule } from '../../../data/api/ApiConnect';
+import jwt from 'jsonwebtoken';
 
 import {
     Button,
@@ -65,8 +66,8 @@ class RuleCreate extends Component {
         }
     }
 
-    createRule(){
-        createNewRule(this.state.ruleName, this.state.ruleDescription, this.state.selectedActionsSubchannels, this.state.selectedEventsSubchannels);
+    createRule(userURL){
+        createNewRule(this.state.ruleName, this.state.ruleDescription, this.state.selectedActionsSubchannels, this.state.selectedEventsSubchannels, userURL);
     }
 
     toogleDeviceModal() {
@@ -234,7 +235,6 @@ class RuleCreate extends Component {
         if (sessionStorage.getItem('jwtToken')===null) {
             return <Redirect push to="/login" />;
         }
-
         let channelsList = this.props.channels.map((channel, index) => (
             <RuleCreateChannelItem key={index} channel={channel} />
         ));
@@ -303,7 +303,7 @@ class RuleCreate extends Component {
                     </Row>
                 </CardBody>
                 <CardFooter>
-                    <Button className="btn-pill" type="submit" size="sm" color="primary" onClick={this.createRule}><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                    <Button className="btn-pill" type="submit" size="sm" color="primary" onClick={this.createRule(JSON.parse(jwt.decode(sessionStorage.getItem('jwtToken'))["data"])[0]["@id"][0])}><i className="fa fa-dot-circle-o"></i> Submit</Button>
                 </CardFooter>
             </div>
         );

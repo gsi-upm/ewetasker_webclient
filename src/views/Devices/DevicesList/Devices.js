@@ -6,6 +6,7 @@ import { Col, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap
 import classnames from 'classnames';
 import ChannelImportedAlert from '../../Alerts/ChannelImportedAlert';
 import { Redirect } from 'react-router';
+import jwt from 'jsonwebtoken';
 
 class Devices extends Component {
     constructor(props){
@@ -46,6 +47,7 @@ class Devices extends Component {
     }   
 
     render (){
+        console.log(jwt.decode(sessionStorage.getItem('jwtToken')))
         if (sessionStorage.getItem('jwtToken')===null) {
             return <Redirect push to="/login" />;
         }

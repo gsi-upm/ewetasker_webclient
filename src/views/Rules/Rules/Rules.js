@@ -13,13 +13,18 @@ class Rules extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
-
-
         this.state = {
             activeTab: '1'
         };
     }
 
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab,
+            });
+        }
+    }
     
     componentWillMount() {
 
@@ -30,16 +35,18 @@ class Rules extends Component {
         };
         getChannelsCallback = getChannelsCallback.bind(this);
         getChannels().then(getChannelsCallback);
-
-    }
-
-    toggle(tab) {
-        if (this.state.activeTab !== tab) {
+/*
+        var getRulesCallback = function(rules){
             this.setState({
-                activeTab: tab,
+              rules: rules
             });
-        }
+        };
+        getRulesCallback = getRulesCallback.bind(this);
+        getCustomRules("http://gsi.dit.upm.es/ontologies/ewe-device/ns/Device").then(getDevicesCallback);
+*/
     }
+
+
 
 
     render() {
@@ -50,7 +57,11 @@ class Rules extends Component {
         if (typeof this.state.channels === "undefined") {
             return <div className="animated fadeIn"></div>
         }
-
+        /*
+        let rulesList = this.state.rules.map((rule, index) => 
+        <RuleItem key={index} rule={rule} />
+        );
+        */
         return (
             <div className="animated fadeIn">
                 <Col xs="12" className="mb-4">
@@ -75,7 +86,9 @@ class Rules extends Component {
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <Row>
+                                { // {rulesList}
                                 <RuleItem />
+                                }
                             </Row>
                         </TabPane>
                         <TabPane tabId="2">
