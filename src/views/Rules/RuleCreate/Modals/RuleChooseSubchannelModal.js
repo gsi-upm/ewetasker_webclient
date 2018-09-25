@@ -53,15 +53,18 @@ class RuleChooseSubchannelModal extends Component {
             if(typeof (this.state.channel.selectedEvent) === 'undefined' || this.state.channel.selectedEvent === ""){
             }else{
                 this.props.confirm(this.state.selectedSubchannel, true);
+                // Clean variable
+                this.state.selectedSubchannel = undefined;
             }
         }else{
             this.props.confirm(this.state.selectedSubchannel, false);
+            // Clean variable
+            this.state.selectedSubchannel = undefined;
         }
         this.props.toogleDeviceModal();
     }
 
     render() {
-
         var itemName = "";
         if(typeof (this.state.channel.selectedAction) === 'undefined' || this.state.channel.selectedAction === ""){
             if(typeof (this.state.channel.selectedEvent) === 'undefined' || this.state.channel.selectedEvent === ""){

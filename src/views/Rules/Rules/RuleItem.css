@@ -10,4 +10,9 @@
 .rule-icon{
     width: 56px !important;
     height: 56px !important;
+    margin-bottom: 10% !important;
+}
+
+.arrow-icon{
+    color: #20a8d8 !important;
 }

@@ -34,8 +34,7 @@ class RuleCreate extends Component {
         this.confirm = this.confirm.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.createRule = this.createRule.bind(this);
-
+        this.clearStates = this.clearStates.bind(this);
         this.state = {
             selectedEvents: [],
             selectedActions: [],
@@ -45,6 +44,18 @@ class RuleCreate extends Component {
             ruleName: "",
             ruleDescription: ""
         }
+    }
+
+    clearStates(){
+        this.setState({
+            selectedEvents: [],
+            selectedActions: [],
+            selectedEventsSubchannels: [],
+            selectedActionsSubchannels: [],
+            selectedChannel: "",
+            ruleName: "",
+            ruleDescription: ""
+        })
     }
 
     onChangeName(e){
@@ -58,17 +69,24 @@ class RuleCreate extends Component {
             ruleDescription: e.target.value
         })
     }
-    confirm(selectedSubchannel, action) {
-        if (action) {
-            this.state.selectedActionsSubchannels.push(selectedSubchannel);
-        } else {
+    confirm(selectedSubchannel, event) {
+        if (event) {
             this.state.selectedEventsSubchannels.push(selectedSubchannel);
+        } else {
+            this.state.selectedActionsSubchannels.push(selectedSubchannel);
         }
     }
 
     createRule(userURL){
-        createNewRule(this.state.ruleName, this.state.ruleDescription, this.state.selectedActionsSubchannels, this.state.selectedEventsSubchannels, userURL);
+        var createNewRuleCallback = function (response) {
+            this.props.handler(true);
+            this.clearStates();
+        };
+        createNewRuleCallback = createNewRuleCallback.bind(this);
+        createNewRule(this.state.ruleName, this.state.ruleDescription, this.state.selectedEventsSubchannels, this.state.selectedActionsSubchannels, userURL).then(createNewRuleCallback);
+        
     }
+    
 
     toogleDeviceModal() {
         this.setState({
@@ -190,7 +208,6 @@ class RuleCreate extends Component {
         const result = {};
         result[droppableSource.droppableId] = selectedChannel.actions;
         result[droppableDestination.droppableId] = destClone;
-
         return result;
     };
 
@@ -226,7 +243,6 @@ class RuleCreate extends Component {
         const result = {};
         result[droppableSource.droppableId] = selectedChannel.events;
         result[droppableDestination.droppableId] = destClone;
-
         return result;
     };
 
@@ -235,6 +251,10 @@ class RuleCreate extends Component {
         if (sessionStorage.getItem('jwtToken')===null) {
             return <Redirect push to="/login" />;
         }
+
+        let userURL = JSON.parse(jwt.decode(sessionStorage.getItem('jwtToken'))["data"])[0]["@id"][0];
+        
+
         let channelsList = this.props.channels.map((channel, index) => (
             <RuleCreateChannelItem key={index} channel={channel} />
         ));
@@ -253,7 +273,7 @@ class RuleCreate extends Component {
                                                 <Label htmlFor="label">Name</Label>
                                             </Col>
                                             <Col xs="12" md="9">
-                                                <Input type="text" id="label" name="label" placeholder="Add a name for your rule" onChange={this.onChangeName} />
+                                                <Input type="text" id="label" name="label" placeholder="Add a name for your rule" onChange={this.onChangeName} value={this.state.ruleName} />
                                             </Col>
                                         </FormGroup>
                                         <FormGroup row>
@@ -261,7 +281,7 @@ class RuleCreate extends Component {
                                                 <Label htmlFor="label">Description</Label>
                                             </Col>
                                             <Col xs="12" md="9">
-                                                <Input type="textarea" id="description" name="description" placeholder="Add a description for your rule" onChange={this.onChangeDescription} />
+                                                <Input type="textarea" id="description" name="description" placeholder="Add a description for your rule" onChange={this.onChangeDescription} value={this.state.ruleDescription} />
                                             </Col>
                                         </FormGroup>
                                     </Col>
@@ -303,7 +323,7 @@ class RuleCreate extends Component {
                     </Row>
                 </CardBody>
                 <CardFooter>
-                    <Button className="btn-pill" type="submit" size="sm" color="primary" onClick={this.createRule(JSON.parse(jwt.decode(sessionStorage.getItem('jwtToken'))["data"])[0]["@id"][0])}><i className="fa fa-dot-circle-o"></i> Submit</Button>
+                    <Button className="btn-pill" type="submit" onClickRoute='/rules' size="sm" color="primary" onClick={() => {this.createRule(userURL);}}><i className="fa fa-dot-circle-o"></i> Submit</Button>
                 </CardFooter>
             </div>
         );

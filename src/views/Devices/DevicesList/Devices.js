@@ -47,7 +47,7 @@ class Devices extends Component {
     }   
 
     render (){
-        console.log(jwt.decode(sessionStorage.getItem('jwtToken')))
+        //console.log(jwt.decode(sessionStorage.getItem('jwtToken')))
         if (sessionStorage.getItem('jwtToken')===null) {
             return <Redirect push to="/login" />;
         }

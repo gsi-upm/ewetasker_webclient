@@ -2,6 +2,7 @@ import { Channel } from '../../model/Channel';
 import { Parameter } from '../../model/Parameter';
 import { Action } from '../../model/Action';
 import { Event } from '../../model/Event';
+import { Rule } from '../../model/Rule';
 import {api} from '../../vars.js';
 
 import axios from 'axios';
@@ -256,7 +257,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
                 "rdfs:label" : param.label,
                 "rdf:type" : param.type,
                 "rdf:value" : param.value,
-                "output" : false,
+                //"output" : false,
                 "operation" : "string:equalIgnoringCase"
             })
         }
@@ -268,7 +269,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
                 "rdfs:label" : param.label,
                 "rdf:type" : param.id,
                 "rdf:value" : param.value,
-                "output" : true,
+                //"output" : true,
                 "operation" : "string:equalIgnoringCase"
             })
         }
@@ -288,7 +289,8 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
             "parameters" : []
         });
     }*/
-        
+    console.log(eventsJson)
+    console.log(actionsJson)
     const request = axios.post(api + '/rules/new', {
         "@context" : {
             "@vocab" : "http://gsi.dit.upm.es/ontologies/ewe/ns/"
@@ -328,5 +330,40 @@ export function signUp(bodyFormData){
       .catch(function (error) {
         console.log(error);
       });
+    return request;
+}
+
+export function getUserRules(user_uri){
+    const request = axios.get(api + '/rules/get_user/' + user_uri)
+        .then(function (response){
+            var rules = response.data.rules.map(function (rule){
+                var ruleObj = new Rule();
+                ruleObj.id = rule["@id"];
+                ruleObj.label = rule["rdfs:label"];
+                ruleObj.comment = rule["rdfs:comment"];
+                ruleObj.rule = rule["rule"];
+                ruleObj.events = rule["events"];
+                ruleObj.actions = rule["actions"];
+                ruleObj.eventsChannels = rule["events channels"];
+                ruleObj.actionsChannels = rule["actions channels"];
+                return ruleObj;
+            });
+            console.log(rules)
+            return rules;
+        })
+        .catch(function (error){
+            console.log(error)
+        })
+    return request;
+}
+
+export function deleteRule(rule_uri){
+    const request = axios.delete(api + '/rules/delete/' + rule_uri)
+        .then(function (response){
+            return response.status === 200;
+        })
+        .catch(function (error){
+            console.log(error)
+        })
     return request;
 }

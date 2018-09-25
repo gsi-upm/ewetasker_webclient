@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, Col, Row, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import classnames from 'classnames';
 import RuleItem from './RuleItem';
-import { getChannels } from '../../../data/api/ApiConnect';
+import { getChannels, getUserRules } from '../../../data/api/ApiConnect';
 import './Rules.css';
 import RuleCreate from '../RuleCreate/RuleCreate';
 import { Redirect } from 'react-router';
+import jwt from 'jsonwebtoken';
 
 class Rules extends Component {
 
@@ -13,9 +14,13 @@ class Rules extends Component {
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
+        this.getAppChannels = this.getAppChannels.bind(this);
+        this.getAppUserRules = this.getAppUserRules.bind(this);
         this.state = {
-            activeTab: '1'
+            activeTab: '1',
+            success: false
         };
+        this.createRuleHandler = this.createRuleHandler.bind(this);
     }
 
     toggle(tab) {
@@ -25,9 +30,15 @@ class Rules extends Component {
             });
         }
     }
-    
-    componentWillMount() {
 
+    createRuleHandler(success) {    
+        this.setState({
+                success: success,
+        });
+        this.toggle('1');
+    }
+
+    getAppChannels(){
         var getChannelsCallback = function (channels) {
             this.setState({
                 channels: channels
@@ -35,18 +46,27 @@ class Rules extends Component {
         };
         getChannelsCallback = getChannelsCallback.bind(this);
         getChannels().then(getChannelsCallback);
-/*
-        var getRulesCallback = function(rules){
+    }
+    getAppUserRules(){
+        var getRulesCallback = function (rules) {
             this.setState({
               rules: rules
             });
         };
         getRulesCallback = getRulesCallback.bind(this);
-        getCustomRules("http://gsi.dit.upm.es/ontologies/ewe-device/ns/Device").then(getDevicesCallback);
-*/
+        getUserRules(JSON.parse(jwt.decode(sessionStorage.getItem('jwtToken'))["data"])[0]["@id"][0]).then(getRulesCallback);
+    }
+    componentWillMount() {
+        this.getAppChannels();
+        this.getAppUserRules();
     }
 
-
+    componentDidUpdate() {
+        if (this.state.success) {
+            this.state.success=false;
+            this.getAppUserRules();
+        }
+    }
 
 
     render() {
@@ -57,11 +77,11 @@ class Rules extends Component {
         if (typeof this.state.channels === "undefined") {
             return <div className="animated fadeIn"></div>
         }
-        /*
+        
         let rulesList = this.state.rules.map((rule, index) => 
         <RuleItem key={index} rule={rule} />
         );
-        */
+
         return (
             <div className="animated fadeIn">
                 <Col xs="12" className="mb-4">
@@ -86,8 +106,8 @@ class Rules extends Component {
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <Row>
-                                { // {rulesList}
-                                <RuleItem />
+                                { rulesList
+                                //<RuleItem />
                                 }
                             </Row>
                         </TabPane>
@@ -98,7 +118,7 @@ class Rules extends Component {
                                         <CardHeader>
                                             <strong>Create rule</strong>
                                         </CardHeader>
-                                        <RuleCreate channels={this.state.channels}/>
+                                        <RuleCreate channels={this.state.channels} handler={this.createRuleHandler}/>
                                         
                                     </Card>
                                 </Col>
