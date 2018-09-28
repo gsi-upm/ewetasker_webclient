@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { Badge, Card, CardBody, CardFooter } from 'reactstrap';
 import classNames from 'classnames';
 import { mapToCssModules } from 'reactstrap/lib/utils';
-import { Link } from 'react-router-dom';
 import { deleteRule } from '../../data/api/ApiConnect';
 import './RuleWidget.css';
-import { Redirect } from 'react-router';
 const propTypes = {
   header: PropTypes.string,
   mainText: PropTypes.string,
@@ -40,9 +38,7 @@ class RuleWidget extends Component {
   delete(id){
     console.log(id)
     var deleteRuleCallback = function(result){
-        this.setState({
-            success: result,
-        })
+      this.props.handler(true);
     }
     deleteRuleCallback = deleteRuleCallback.bind(this);
     deleteRule(id).then(deleteRuleCallback);
@@ -64,10 +60,6 @@ class RuleWidget extends Component {
       const classes = classNames(icon, 'bg-' + card.color, padding.icon, 'font-2xl mr-3 float-left rule-icon');
       return (<i className={classes}></i>);
     };
-
-    if (this.state.success){
-      return <Redirect to={{ pathname: '/rules' }} />;
-    }
 
     const cardFooter = function () {
       if (footer) {

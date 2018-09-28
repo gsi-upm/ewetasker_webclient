@@ -51,6 +51,11 @@ const ServicesEdit = Loadable({
   loading: Loading,
 });
 
+const Login = Loadable({
+  loader: () => import('./views/Components/Pages/Login/Login'),
+  loading: Loading,
+});
+
 const Logout = Loadable({
   loader: () => import('./views/Components/Pages/Logout/Logout'),
   loading: Loading,
@@ -59,8 +64,9 @@ const Logout = Loadable({
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Home', component: DefaultLayout },
-  { path: '/dashboard', exact: true, name: 'Dashboard', component: Dashboard },
+  //{ path: '/', exact: true, name: 'Home', component: Dashboard },
+  { path: '/home', exact: true, name: 'Channels', component: Channels },
+  // { path: '/dashboard', exact: true, name: 'Dashboard', component: Dashboard },
   { path: '/channels', exact: true, name: 'Channels', component: Channels },
   { path: '/channels/edit', name: 'Edit', component: ChannelEdit },
   { path: '/rules', exact: true, name: 'Rules', component: Rules },

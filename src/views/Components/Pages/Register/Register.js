@@ -63,7 +63,7 @@ class Register extends Component {
   render() {
 
     if (sessionStorage.getItem('jwtToken')!==null) {
-      return <Redirect push to="/" />;
+      return <Redirect push to="/home" />;
     }
 
     return (

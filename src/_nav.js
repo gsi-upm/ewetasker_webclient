@@ -9,11 +9,13 @@ export default {
       },
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
+    /*
     {
       name: 'Home',
       url: '/home',
       icon: 'icon-home',
     },
+    */
     {
       name: 'Channels',
       url: '/channels',
@@ -43,11 +45,13 @@ export default {
       },
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
+    /*
     {
       name: 'Settings',
       url: '/settings',
       icon: 'icon-settings',
     },
+    */
     {
       name: 'Logout',
       url: '/logout',

@@ -10,7 +10,7 @@ class RuleItem extends Component{
     render () {
         return (
             <Col xs="12" sm="6"  className="RuleItem">
-                    <RuleWidget rule_id={this.props.rule.id[0]} header={this.props.rule.label} mainText={this.props.rule.comment} events={this.props.rule.eventsChannels} actions={this.props.rule.actionsChannels} />         
+                    <RuleWidget rule_id={this.props.rule.id[0]} header={this.props.rule.label} mainText={this.props.rule.comment} events={this.props.rule.eventsChannels} actions={this.props.rule.actionsChannels} handler={this.props.handler} />         
             </Col>
             
         );

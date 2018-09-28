@@ -20,7 +20,7 @@ class Rules extends Component {
             activeTab: '1',
             success: false
         };
-        this.createRuleHandler = this.createRuleHandler.bind(this);
+        this.modifyRuleHandler = this.modifyRuleHandler.bind(this);
     }
 
     toggle(tab) {
@@ -31,7 +31,7 @@ class Rules extends Component {
         }
     }
 
-    createRuleHandler(success) {    
+    modifyRuleHandler(success) {    
         this.setState({
                 success: success,
         });
@@ -63,7 +63,9 @@ class Rules extends Component {
 
     componentDidUpdate() {
         if (this.state.success) {
-            this.state.success=false;
+            this.setState({
+                success: false
+            });
             this.getAppUserRules();
         }
     }
@@ -79,7 +81,7 @@ class Rules extends Component {
         }
         
         let rulesList = this.state.rules.map((rule, index) => 
-        <RuleItem key={index} rule={rule} />
+        <RuleItem key={index} rule={rule} handler={this.modifyRuleHandler} />
         );
 
         return (
@@ -118,7 +120,7 @@ class Rules extends Component {
                                         <CardHeader>
                                             <strong>Create rule</strong>
                                         </CardHeader>
-                                        <RuleCreate channels={this.state.channels} handler={this.createRuleHandler}/>
+                                        <RuleCreate channels={this.state.channels} handler={this.modifyRuleHandler}/>
                                         
                                     </Card>
                                 </Col>

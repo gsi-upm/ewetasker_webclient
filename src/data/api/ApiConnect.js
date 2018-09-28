@@ -146,6 +146,7 @@ export function getCustomSubChannels(channel_uri){
                 channelObj.id = channel["@id"];
                 channelObj.label = channel["rdfs:label"];
                 channelObj.comment = channel["rdfs:comment"];
+                channelObj.type = channel["rdf:type"];
                 var parameters = channel["parameters"].map(function (parameter){
                     var parameterObj = new Parameter();
                     parameterObj.id = parameter["@id"];
@@ -244,7 +245,8 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
 
         eventsJson.push({
             "@id" : subchannel.selectedEvent.id,
-            "parameters" : parameters
+            "parameters" : parameters,
+            "rdfs:domain" : subchannel.type
         })
     }
 
@@ -277,7 +279,8 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
         actionsJson.push({
             "@id" : subchannel.selectedAction.id,
             "rdfs:label" : subchannel.selectedAction.label,
-            "parameters" : parameters
+            "parameters" : parameters,
+            "rdfs:domain" : subchannel.type
         })
     }
 
