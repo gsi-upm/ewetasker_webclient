@@ -337,7 +337,7 @@ export function signUp(bodyFormData){
 }
 
 export function getUserRules(user_uri){
-    const request = axios.get(api + '/rules/get_user/' + user_uri)
+    const request = axios.get(api + '/rules/user/' + user_uri)
         .then(function (response){
             var rules = response.data.rules.map(function (rule){
                 var ruleObj = new Rule();
