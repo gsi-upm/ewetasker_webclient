@@ -1,13 +1,16 @@
-# EWE Tasker Web Client
+# EWE Tasker
+EWE Tasker is an emotion aware automation platform based on semantic ECA (Event-Condition-Action) rules. It is capable of enable semantic automation rules in a smart environment allowing the user to configure his own automation rules in an easy way. This platform is divided in two modules: [Ewetasker Server](https://lab.cluster.gsi.dit.upm.es/ewe/ewetasker_server.git) module, and [Ewetasker Web Client](https://lab.cluster.gsi.dit.upm.es/ewe/ewetasker_webclient.git) module.
 
-This repository contains EWE Tasker Server module, written in Python.
+## EWE Tasker Web Client
+
+This repository contains EWE Tasker Web Client module, written in React. It provides a web application to create and manage semantic rules in order to automate tasks for services or smart devices.
 
 ## INSTALLATION
 
 ### REQUIREMENTS
 In order to install Ewetasker web client, it is needed to have installed docker-compose. Follow this [link](https://docs.docker.com/compose/install/) if you need more information about it.
 
-In addition, Ewetasker web client works with [Ewetasker server](https://lab.cluster.gsi.dit.upm.es/ewe/ewetasker_server), so you must to install and launch it first.
+In addition, Ewetasker web client works with [Ewetasker Server](https://lab.cluster.gsi.dit.upm.es/ewe/ewetasker_server), so you must to install and launch it first.
 
 ### STEP BY STEP
 
