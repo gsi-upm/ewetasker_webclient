@@ -110,9 +110,8 @@ class DevicesEdit extends Component {
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button className="btn-pill" type="submit" size="sm" color="primary" onClick={this.submit}><i className="fa fa-dot-circle-o"></i> Submit</Button>{' '}
                         <Button className="btn-pill" type="reset" size="sm" color="danger" onClick={this.delete}><i className="fa fa-trash"></i> Delete</Button>{' '}
-                        <Button className="btn-pill" type="reset" size="sm" color="secondary" onClick={this.cancel}><i className="fa fa-ban"></i> Cancel</Button>
+                        <Button className="btn-pill" type="reset" size="sm" color="secondary" onClick={this.cancel}><i className="fa fa-arrow-left"></i> Back</Button>
                     </CardFooter>
                     </Card>
                     </Col>

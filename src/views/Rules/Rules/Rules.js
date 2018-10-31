@@ -108,9 +108,7 @@ class Rules extends Component {
                     <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId="1">
                             <Row>
-                                { rulesList
-                                //<RuleItem />
-                                }
+                                {rulesList}
                             </Row>
                         </TabPane>
                         <TabPane tabId="2">

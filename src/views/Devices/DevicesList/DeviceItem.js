@@ -11,7 +11,7 @@ class DeviceItem extends Component{
         return (
             <Col xs="12" sm="6" lg="4"className="DeviceItem">
                 <Link to={{ pathname: this.props.onClickRoute, state: { device: this.props.device } }}>
-                    <ChannelWidget header={this.props.device.label} mainText={this.props.device.comment} icon={this.props.device.logo} color="primary" />
+                    <ChannelWidget header={this.props.device.label} mainText={this.props.device.comment} icon={this.props.device.logo} color={this.props.device.color} />
                 </Link>
 
             </Col>

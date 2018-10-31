@@ -56,9 +56,9 @@ class RuleWidget extends Component {
     const lead = { style: 'h5 mb-0', color: color, classes: '' };
     lead.classes = classNames(lead.style, 'text-' + card.color, padding.lead);
 
-    const blockIcon = function (icon) {
-      const classes = classNames(icon, 'bg-' + card.color, padding.icon, 'font-2xl mr-3 float-left rule-icon');
-      return (<i className={classes}></i>);
+    const blockIcon = function (icon, color) {
+      const classes = classNames(icon, padding.icon, 'font-2xl mr-3 float-left rule-icon channelIcon');
+      return (<i className={classes} style={{'background-color':color}}></i>);
     };
 
     const cardFooter = function () {
@@ -73,11 +73,11 @@ class RuleWidget extends Component {
     };
 
     let eventsIcons = events.map((event) => 
-      blockIcon(event["foaf:logo"])
+      blockIcon(event["foaf:logo"], event["color"])
     );
 
     let actionsIcons = actions.map((action) => 
-    blockIcon(action["foaf:logo"])
+    blockIcon(action["foaf:logo"], action["color"])
   );
 
 

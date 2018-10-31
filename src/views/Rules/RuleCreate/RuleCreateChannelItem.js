@@ -7,6 +7,7 @@ import { Card,
     ListGroupItem, 
     Col } 
     from 'reactstrap';
+import './RuleCreateChannelItem.css';
 
 class RuleCreateChannelItem extends Component {
 
@@ -14,10 +15,8 @@ class RuleCreateChannelItem extends Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
-        let colors = ["bg-primary", "bg-secondary", "bg-success","bg-danger", "bg-warning", "bg-info"];
         this.state = {
-            collapse: false,
-            color: colors[Math.floor(Math.random()*colors.length)]
+            collapse: false
         };
     }   
 
@@ -53,7 +52,7 @@ class RuleCreateChannelItem extends Component {
                                                                     {...provided.draggableProps}
                                                                     {...provided.dragHandleProps}
                                                                 >
-                                                                    <i className={this.state.color + " p-2 font-2xl mr-3 float-left " + action.logo}></i>
+                                                                    <i style={{'background-color':this.props.channel.color}} className={" p-2 font-2xl mr-3 float-left channelIcon " + action.logo} ></i>
                                                                     <div className="text-muted font-weight-bold font-xs">{action.label}</div>
                                                                     <div className="channelDescription text-muted font-xs">{action.comment}</div>
                                                                 </div>
@@ -88,7 +87,7 @@ class RuleCreateChannelItem extends Component {
                                                                     {...provided.dragHandleProps}
                                                                 >
                                                                 
-                                                                    <i className={this.state.color + " p-2 font-2xl mr-3 float-left " + event.logo}></i>
+                                                                    <i style={{'background-color':this.props.channel.color}} className={" p-2 font-2xl mr-3 float-left channelIcon " + event.logo}></i>
                                                                     <div className="text-muted font-weight-bold font-xs">{event.label}</div>
                                                                     <div className="channelDescription text-muted font-xs">{event.comment}</div>
                                                                 </div>

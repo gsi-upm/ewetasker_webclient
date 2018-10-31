@@ -8,10 +8,9 @@ import './ChannelItem.css';
 class ChannelItem extends Component{
 
     render () {
-
         return (
             <Col sm="4" className="ChannelItem">
-                <ChannelCompleteWidget onClickRoute='/channels/edit' channel={this.props.channel} header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color="primary" />
+                <ChannelCompleteWidget onClickRoute='/channels/edit' channel={this.props.channel} header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color={this.props.channel.color} />
             </Col>
         );
     }
@@ -19,8 +18,3 @@ class ChannelItem extends Component{
 
 export default ChannelItem;
 
-/*
-<Link to={{ pathname: this.props.onClickRoute, state: { channel: this.props.channel } }}>
-                    <ChannelCompleteWidget header={this.props.channel.label} mainText={this.props.channel.comment} icon="fa fa-tv" color="primary" />
-                </Link>
-*/

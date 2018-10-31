@@ -33,7 +33,7 @@ class ServicesEdit extends Component {
     }
 
     delete(){
-
+        
         var deleteServiceCallback = function(result){
             this.setState({
                 success: result,
@@ -42,6 +42,7 @@ class ServicesEdit extends Component {
         }
         deleteServiceCallback = deleteServiceCallback.bind(this);
         const {service} = this.props.location.state
+        console.log(service.id)
         deleteCustomChannel(service.id).then(deleteServiceCallback);
     }
 
@@ -52,7 +53,6 @@ class ServicesEdit extends Component {
     }
     
     render(){
-
         if (sessionStorage.getItem('jwtToken')===null) {
             return <Redirect push to="/login" />;
         }
@@ -109,9 +109,8 @@ class ServicesEdit extends Component {
                         </Form>
                     </CardBody>
                     <CardFooter>
-                        <Button className="btn-pill" type="submit" size="sm" color="primary" onClick={this.submit}><i className="fa fa-dot-circle-o"></i> Submit</Button>{' '}
                         <Button className="btn-pill" type="reset" size="sm" color="danger" onClick={this.delete}><i className="fa fa-trash"></i> Delete</Button>{' '}
-                        <Button className="btn-pill" type="reset" size="sm" color="secondary" onClick={this.cancel}><i className="fa fa-ban"></i> Cancel</Button>
+                        <Button className="btn-pill" type="reset" size="sm" color="secondary" onClick={this.cancel}><i className="fa fa-arrow-left"></i> Back</Button>
                     </CardFooter>
                     </Card>
                     </Col>

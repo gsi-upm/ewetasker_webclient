@@ -12,7 +12,7 @@ class RuleDroppable extends Component {
 
     constructor(props){
         super(props);
-        let colors = ["bg-primary", "bg-secondary", "bg-success","bg-danger", "bg-warning", "bg-info"];
+        let colors = ["bg-primary"];
         this.state = {
             color: colors[Math.floor(Math.random()*colors.length)]
         };

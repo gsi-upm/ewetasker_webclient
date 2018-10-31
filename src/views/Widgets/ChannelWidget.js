@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardBody, CardFooter } from 'reactstrap';
 import classNames from 'classnames';
 import { mapToCssModules } from 'reactstrap/lib/utils';
-
+import './ChannelWidget.css';
 const propTypes = {
   header: PropTypes.string,
   mainText: PropTypes.string,
@@ -42,8 +42,8 @@ class ChannelWidget extends Component {
     lead.classes = classNames(lead.style, 'text-' + card.color, padding.lead);
 
     const blockIcon = function (icon) {
-      const classes = classNames(icon, 'bg-' + card.color, padding.icon, 'font-2xl mr-3 float-left');
-      return (<i className={classes}></i>);
+      const classes = classNames(icon, padding.icon, 'font-2xl mr-3 float-left channelIcon');
+      return (<i className={classes} style={{'background-color':card.color}}></i>);
     };
 
     const cardFooter = function () {

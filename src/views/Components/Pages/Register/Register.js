@@ -3,7 +3,7 @@ import { Button, Card, CardBody, CardFooter, Col, Container, Input, InputGroup, 
 import { Redirect } from 'react-router';
 import { signUp } from '../../../../data/api/ApiConnect';
 import { sha256 } from 'js-sha256';
-
+import logo from '../../../../assets/img/brand/ewetasker.png'
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +73,7 @@ class Register extends Component {
             <Col md="6">
               <Card className="mx-4">
                 <CardBody className="p-4">
-                  <h1>Register</h1>
+                <h1>Register <img src={logo} height={90} style={{'margin-left':'120px'}} alt= 'Ewetasker Img'/></h1>
                   <p className="text-muted">Create your Ewetasker account</p>
                   <InputGroup className="mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -99,7 +99,7 @@ class Register extends Component {
                     </InputGroupAddon>
                     <Input type="password" placeholder="Repeat password"  onChange={this.onChangeRepeatPassword}/>
                   </InputGroup>
-                  <Button color="success" block onClick={(event) => this.handleClick(event)}>Create Account</Button>
+                  <Button color="primary" block onClick={(event) => this.handleClick(event)}>Create Account</Button>
                 </CardBody>
               </Card>
             </Col>

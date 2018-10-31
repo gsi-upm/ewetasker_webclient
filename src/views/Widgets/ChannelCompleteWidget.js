@@ -60,8 +60,8 @@ class ChannelCompleteWidget extends Component {
     lead.classes = classNames(lead.style, 'text-' + card.color, padding.lead);
 
     const blockIcon = function (icon) {
-      const classes = classNames(icon, 'bg-' + card.color, padding.icon, 'font-2xl mr-3 float-left');
-      return (<i className={classes}></i>);
+      const classes = classNames(icon, padding.icon, 'font-2xl mr-3 float-left channelIcon');
+      return (<i className={classes} style={{'background-color':card.color}}></i>);
     };
 
     const cardFooter = function () {
@@ -69,7 +69,7 @@ class ChannelCompleteWidget extends Component {
         return (
           <CardFooter className="px-3 py-2">
             <a className="font-weight-bold font-xs btn-block text-muted" href={link}>View More
-              <i className="fa fa-angle-right float-right font-lg"></i></a>
+              <i className="fa fa-angle-right float-right font-lg" ></i></a>
           </CardFooter>
         );
       }
@@ -89,7 +89,7 @@ class ChannelCompleteWidget extends Component {
           <Row>
             <Col xs="12">
               {blockIcon(card.icon)}
-              <div className={lead.classes}>{header}<Link to={{ pathname: this.props.onClickRoute, state: { channel: this.props.channel } }}><Badge className="badgeChannel" color="success">Edit</Badge></Link></div>
+              <div className={lead.classes}>{header}<Link to={{ pathname: this.props.onClickRoute, state: { channel: this.props.channel } }}><Badge className="badgeChannel">Edit</Badge></Link></div>
               <div className="channelDescription text-muted font-xs">{mainText}</div>
             </Col>
           </Row>

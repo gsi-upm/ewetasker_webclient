@@ -12,7 +12,7 @@ class ChannelItem extends Component{
         return (
             <Col sm="4" className="ChannelItem">
                 <Link to={{ pathname: this.props.onClickRoute, state: { channel: this.props.channel } }}>
-                    <ChannelWidget header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color="primary" />
+                    <ChannelWidget header={this.props.channel.label} mainText={this.props.channel.comment} events={this.props.channel.events} actions={this.props.channel.actions} icon={this.props.channel.logo} color={this.props.channel.color} />
                 </Link>
             </Col>
         );

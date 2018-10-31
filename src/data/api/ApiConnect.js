@@ -16,7 +16,7 @@ export function getChannels(){
                 channelObj.label = channel["rdfs:label"];
                 channelObj.comment = channel["rdfs:comment"];
                 channelObj.logo = channel["foaf:logo"];
-                
+                channelObj.color = channel["color"];
                 var parameters = channel["parameters"].map(function (parameter){
                     var parameterObj = new Parameter();
                     parameterObj.id = parameter["@id"];
@@ -89,6 +89,7 @@ export function getCategoryChannels(category_uri){
                 channelObj.label = channel["rdfs:label"];
                 channelObj.comment = channel["rdfs:comment"];
                 channelObj.logo = channel["foaf:logo"];
+                channelObj.color = channel["color"];
                 var parameters = channel["parameters"].map(function (parameter){
                     var parameterObj = new Parameter();
                     parameterObj.id = parameter["@id"];
@@ -118,6 +119,7 @@ export function getCustomCategoryChannels(category_uri){
                 channelObj.comment = channel["rdfs:comment"];
                 channelObj.type = channel["rdf:type"];
                 channelObj.logo = channel["foaf:logo"];
+                channelObj.color = channel["color"];
                 var parameters = channel["parameters"].map(function (parameter){
                     var parameterObj = new Parameter();
                     parameterObj.id = parameter["@id"];
@@ -165,6 +167,7 @@ export function getCustomSubChannels(channel_uri){
         .catch(function (error){
             console.log(error)
         })
+        
     return request;
 }
 
@@ -205,6 +208,7 @@ export function importChannel(channel){
 export function deleteCustomChannel(channel_uri){
     const request = axios.delete(api + '/channels/custom/delete/' + channel_uri)
         .then(function (response){
+            console.log(response)
             return response.status === 200;
         })
         .catch(function (error){

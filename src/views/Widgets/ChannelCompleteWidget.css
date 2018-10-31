@@ -4,6 +4,8 @@
 
 .badgeChannel{
     float: right;
+    color: white;
+    background-color: #00629b;
 }
 
 .list-group-item{
@@ -12,4 +14,7 @@
 
 .channelDescription{
     margin-top: 1% !important;
+}
+.channelIcon{
+    color: white !important;
 }

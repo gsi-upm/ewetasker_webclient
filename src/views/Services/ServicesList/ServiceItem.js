@@ -11,7 +11,7 @@ class ServiceItem extends Component{
         return (
             <Col xs="12" sm="6" lg="4"className="ServiceItem">
                 <Link to={{ pathname: this.props.onClickRoute, state: { service: this.props.service } }}>
-                    <ChannelWidget header={this.props.service.label} mainText={this.props.service.comment} icon={this.props.service.logo} color="primary" />
+                    <ChannelWidget header={this.props.service.label} mainText={this.props.service.comment} icon={this.props.service.logo} color={this.props.service.color} />
                 </Link>
             </Col>
         );

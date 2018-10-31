@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { login } from '../../../../data/api/ApiConnect';
 import { sha256 } from 'js-sha256';
 import jwt from 'jsonwebtoken';
+import logo from '../../../../assets/img/brand/ewetasker.png'
+import gsi from '../../../../assets/img/brand/gsi.png';
+import { isUndefined } from 'util';
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -34,14 +37,19 @@ class Login extends Component {
     bodyFormData.set('password', sha256(this.state.password));
     login(bodyFormData).then(function(response){
       console.log(response)
-      if (response !== 0) {
-        
-        console.log(response);
-        console.log("Login successfull");
-        sessionStorage.setItem('jwtToken', response);
-      }else {
+      if (response === 0) {
         console.log("Username password do not match");
         alert("Username and password do not match")
+      }else{
+        if ((response === 2)||(response === undefined)) {
+          console.log(response);
+          console.log("Can not connect to database");
+          alert("Database is down")
+        }else{
+          console.log(response);
+          console.log("Login successfull");
+          sessionStorage.setItem('jwtToken', response);
+        }
       }
       window.location.reload();
   });
@@ -55,13 +63,13 @@ class Login extends Component {
     return (
       <div className="app flex-row align-items-center">
         <Container>
-          <Row className="justify-content-center">
+          <Row className="justify-content-center">    
             <Col md="8">
               <CardGroup>
-                <Card className="p-4">
+                <Card className="text-white bg-primary p-4">
                   <CardBody>
                     <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                    <p>Sign In to your account</p>
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -80,19 +88,21 @@ class Login extends Component {
                     </InputGroup>
                     <Row>
                       <Col xs="6">
-                        <Button color="primary" className="px-4" onClick={(event) => this.handleClick(event)}>Login</Button>
+                        <Button color="primary" className="mt-3" active onClick={(event) => this.handleClick(event)}>Login</Button>
                       </Col>
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
-                  <CardBody className="text-center">
+                <Card className=" p-4">
+                  <CardBody>
                     <div>
-                      <h2>Sign up</h2>
-                      <p>Try Ewetasker capabilities to automate tasks in an easy way.</p>
+                      <h1>Sign up</h1>
+                      <p className="text-muted">Try Ewetasker capabilities to automate tasks in an easy way.</p>
+                    <span><img src={logo} height='90px' alt= 'Ewetasker Img'/><img src={gsi} height='50px' style={{'padding-left':'20px'}} alt='gsi-logo'/></span>
                       <Link to={{ pathname: '/register'}}>
                         <Button color="primary" className="mt-3" active>Register Now!</Button>
                       </Link>
+                      
                     </div>
                   </CardBody>
                 </Card>
@@ -100,6 +110,7 @@ class Login extends Component {
             </Col>
           </Row>
         </Container>
+        
       </div>
     );
   }
