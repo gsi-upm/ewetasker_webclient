@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Col, Form, FormGroup, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { getCustomSubChannels } from '../../../../data/api/ApiConnect';
+import { Parameter } from '../../../../model/Parameter';
 
 class RuleChooseSubchannelModal extends Component {
 
@@ -10,6 +11,8 @@ class RuleChooseSubchannelModal extends Component {
         this.loadSubchannels = this.loadSubchannels.bind(this);
         this.confirm = this.confirm.bind(this);
         this.onChangeSubchannel = this.onChangeSubchannel.bind(this);
+        this.onChangeOperation = this.onChangeOperation.bind(this);
+        this.getOperationsOptions = this.getOperationsOptions.bind(this);
         this.state = {
             channel: "",
             channels: [],
@@ -17,7 +20,7 @@ class RuleChooseSubchannelModal extends Component {
         }
     }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps() {
         this.setState({
             channel: Object.assign({}, this.props.channel)
         })
@@ -37,26 +40,61 @@ class RuleChooseSubchannelModal extends Component {
     }
 
     toggle() {
+        //this.state.selectedSubchannel = undefined;
         this.props.toogleDeviceModal();
     }
 
-    onChangeDynamicParameter(param, e){
+    onChangeDynamicParameter(param, e) {
         param.value = e.target.value;
     }
 
-    onChangeSubchannel(e){
-        console.log(e);
+    onChangeOperation(param, e) {
+        param.operation=e.target.value;
     }
 
-    confirm(){
-        if(typeof (this.state.channel.selectedAction) === 'undefined' || this.state.channel.selectedAction === ""){
-            if(typeof (this.state.channel.selectedEvent) === 'undefined' || this.state.channel.selectedEvent === ""){
-            }else{
+    getOperationsOptions(param) {
+        var option = param.operations.map((op_param, op_index) => {
+            return (
+                <option key={op_index} value={op_param.id}>{op_param.name}</option>
+            );
+        });
+        return (
+            <FormGroup row>
+            <Col md="4">
+                <Label htmlFor="ccmonth">Operation</Label>
+            </Col>
+                <Col md="8">
+                    <Input type="select" name="ccmonth" id="ccmonth" onChange={(e) => this.onChangeOperation(param, e)}>
+                        {option}
+                    </Input>
+                </Col></FormGroup>
+        );
+    }
+
+    onChangeSubchannel(e) {
+        this.state.channels.map((subchannel, index) => {
+            if (subchannel.id == e.target.value) {
+                this.setState({
+                    selectedSubchannel: subchannel
+                });
+            }
+        });
+    }
+
+    confirm() {
+        if (typeof (this.state.channel.selectedAction) === 'undefined' || this.state.channel.selectedAction === "") {
+            if (typeof (this.state.channel.selectedEvent) === 'undefined' || this.state.channel.selectedEvent === "") {
+            } else {
+                this.state.selectedSubchannel.selectedEvent.outputParameters.map((op_param, op_index) => {
+                    if (this.state.selectedSubchannel.selectedEvent.outputParameters[op_index].operation == undefined) {
+                        this.state.selectedSubchannel.selectedEvent.outputParameters[op_index].operation = this.state.selectedSubchannel.selectedEvent.outputParameters[op_index].operations[0].id;
+                    }
+                });
                 this.props.confirm(this.state.selectedSubchannel, true);
                 // Clean variable
                 this.state.selectedSubchannel = undefined;
             }
-        }else{
+        } else {
             this.props.confirm(this.state.selectedSubchannel, false);
             // Clean variable
             this.state.selectedSubchannel = undefined;
@@ -64,21 +102,23 @@ class RuleChooseSubchannelModal extends Component {
         this.props.toogleDeviceModal();
     }
 
+
+
     render() {
         var itemName = "";
-        if(typeof (this.state.channel.selectedAction) === 'undefined' || this.state.channel.selectedAction === ""){
-            if(typeof (this.state.channel.selectedEvent) === 'undefined' || this.state.channel.selectedEvent === ""){
-            }else{
+        if (typeof (this.state.channel.selectedAction) === 'undefined' || this.state.channel.selectedAction === "") {
+            if (typeof (this.state.channel.selectedEvent) === 'undefined' || this.state.channel.selectedEvent === "") {
+            } else {
                 // Check if a subchannel has been selected, for assigning the selected event
-                if(this.state.selectedSubchannel !== "" && typeof(this.state.selectedSubchannel) !== "undefined"){
+                if (this.state.selectedSubchannel !== "" && typeof (this.state.selectedSubchannel) !== "undefined") {
                     // FIXME: should not mutate state directly. Use setState()
                     this.state.selectedSubchannel.selectedEvent = this.state.channel.selectedEvent;
                 }
                 itemName = this.state.channel.selectedEvent.label;
             }
-        }else{
+        } else {
             // Check if a subchannel has been selected, for assigning the selected action
-            if(this.state.selectedSubchannel !== "" && typeof(this.state.selectedSubchannel) !== "undefined"){
+            if (this.state.selectedSubchannel !== "" && typeof (this.state.selectedSubchannel) !== "undefined") {
                 // FIXME: should not mutate state directly. Use setState()
                 this.state.selectedSubchannel.selectedAction = this.state.channel.selectedAction;
             }
@@ -95,6 +135,7 @@ class RuleChooseSubchannelModal extends Component {
         var staticParams = <FormGroup row></FormGroup>;
         if (typeof (this.state.selectedSubchannel) !== 'undefined' && this.state.selectedSubchannel !== "") {
             staticParams = this.state.selectedSubchannel.parameters.map((param, index) => {
+                //console.log(this.state.selectedSubchannel)
                 return (
                     <FormGroup key={index} row>
                         <Col md="4">
@@ -124,10 +165,12 @@ class RuleChooseSubchannelModal extends Component {
             });
 
         }
-
         if (typeof (this.state.channel.selectedEvent) !== 'undefined' && typeof (this.state.channel.selectedEvent.outputParameters) !== 'undefined' && this.state.channel.selectedEvent !== "") {
             dynamicParams = this.state.channel.selectedEvent.outputParameters.map((param, index) => {
+                var operations = this.getOperationsOptions(param);
                 return (
+                    <div>
+                        {operations}
                     <FormGroup key={index} row>
                         <Col md="4">
                             <Label>{param.label}</Label>
@@ -136,6 +179,7 @@ class RuleChooseSubchannelModal extends Component {
                             <Input type="text" id="text-input" name="text-input" placeholder="Text" onChange={(e) => this.onChangeDynamicParameter(param, e)} />
                         </Col>
                     </FormGroup>
+                    </div>
                 );
             });
 
@@ -148,7 +192,7 @@ class RuleChooseSubchannelModal extends Component {
                     <Form>
                         <FormGroup>
                             <Label htmlFor="ccmonth">Choose a device/service</Label>
-                            <Input type="select" name="ccmonth" id="ccmonth" onChange={this.onChangeSubchannel}>
+                            <Input type="select" name="ccmonth" id="ccmonth" onChange={(e) => this.onChangeSubchannel(e)}>
                                 {subchannels}
                             </Input>
                         </FormGroup>

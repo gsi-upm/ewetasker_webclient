@@ -51,12 +51,14 @@ export function getChannels(){
                     eventnObj.label = event["rdfs:label"];
                     eventnObj.comment = event["rdfs:comment"];
                     eventnObj.logo = channel["foaf:logo"];
+                   
 
                     var outputParameters = event["output_parameters"].map(function (parameter){
                         var parameterObj = new Parameter();
                         parameterObj.id = parameter["@id"];
                         parameterObj.label = parameter["rdfs:label"];
                         parameterObj.comment = parameter["rdfs:comment"];
+                        parameterObj.operations = parameter["operations"];
                         return parameterObj;
                     });
 
@@ -157,6 +159,7 @@ export function getCustomSubChannels(channel_uri){
                     parameterObj.datatype = parameter["rdf:datatype"];
                     parameterObj.value = parameter["rdf:value"];
                     parameterObj.type = parameter["rdf:type"];
+                    parameterObj.operation ="http://www.w3.org/2000/10/swap/string#equalIgnoringCase";
                     return parameterObj;
                 });
                 channelObj.parameters = parameters;
@@ -184,7 +187,10 @@ export function importChannel(channel){
             "rdf:value" : param.value
         });
     }
-        
+    console.log(channel.label)
+    console.log(channel.comment) 
+    console.log(channel.id) 
+    console.log(parameters)   
     const request = axios.post(api + '/channels/import', {
         "@context" : {
             "@base" : base,
@@ -233,7 +239,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
                 "@id" : param.id,
                 "rdf:type" : param.type,
                 "rdf:value" : param.value,
-                "operation" : "string:equalIgnoringCase"
+                "ewe:operation" : param.operation
             })
         }
 
@@ -243,7 +249,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
                 "@id" : param.id,
                 "rdf:type" : param.id,
                 "rdf:value" : param.value,
-                "operation" : "string:equalIgnoringCase"
+                "ewe:operation" : param.operation
             })
         }
 
@@ -264,7 +270,6 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
                 "rdf:type" : param.type,
                 "rdf:value" : param.value,
                 //"output" : false,
-                "operation" : "string:equalIgnoringCase"
             })
         }
 
@@ -275,8 +280,7 @@ export function createNewRule(label, comment, eventSubchannels, actionSubchannel
                 "rdfs:label" : param.label,
                 "rdf:type" : param.id,
                 "rdf:value" : param.value,
-                //"output" : true,
-                "operation" : "string:equalIgnoringCase"
+                //"output" : true
             })
         }
 
