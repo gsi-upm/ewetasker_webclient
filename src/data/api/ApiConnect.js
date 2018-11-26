@@ -3,11 +3,10 @@ import { Parameter } from '../../model/Parameter';
 import { Action } from '../../model/Action';
 import { Event } from '../../model/Event';
 import { Rule } from '../../model/Rule';
-import {api} from '../../vars.js';
-
 import axios from 'axios';
-
+const api="http://"+process.env.REACT_APP_API_URL;
 export function getChannels(){
+   
     const request = axios.get(api + '/channels/base')
         .then(function (response){
             var channels = response.data.channels.map(function (channel){
