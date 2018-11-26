@@ -1,0 +1,27 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ${NAME}-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: ${NAME}-web
+        app: ${NAME}-web
+    spec:
+      imagePullSecrets:
+        - name: registry.cluster.gsi.dit.upm.es
+      containers:
+        - name: ${NAME}-web
+          image: ${IMAGEWTAG}
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - name: web
+              containerPort: 5000
+---
