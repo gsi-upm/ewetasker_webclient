@@ -125,7 +125,6 @@ class RuleCreate extends Component {
         if ((source.droppableId.includes("events_") && destination.droppableId === "droppableActions") || (source.droppableId.includes("actions_") && destination.droppableId === "droppableEvents")) {
             return;
         }
-
         // check if it has been added to actions or events
         if (source.droppableId.includes("actions_")) {
             const result = this.moveToActions(draggableId, source.droppableId, source, destination);
@@ -135,7 +134,8 @@ class RuleCreate extends Component {
             });
 
             this.toogleDeviceModal()
-        } else {
+        } 
+        if (source.droppableId.includes("events_"))  {
             const result = this.moveToEvents(draggableId, source.droppableId, source, destination);
 
             this.setState({
@@ -189,6 +189,7 @@ class RuleCreate extends Component {
                 for (var action of channel.actions) {
                     if (action.id === actionId) {
                         // create a copy of the selected action
+                        selectedChannel.selectedEvent=""
                         selectedAction = Object.assign({}, action);
                         selectedChannel.selectedAction = action;
                         selectedAction.id = selectedAction.id + "_copy";
@@ -225,6 +226,7 @@ class RuleCreate extends Component {
                 // get selected event
                 for (var event of channel.events) {
                     if (event.id === eventId) {
+                        selectedChannel.selectedAction=""
                         // create a copy of the selected event
                         selectedEvent = Object.assign({}, event);
                         selectedChannel.selectedEvent = event;
@@ -239,7 +241,6 @@ class RuleCreate extends Component {
         this.setState({
             selectedChannel: selectedChannel
         });
-
         const result = {};
         result[droppableSource.droppableId] = selectedChannel.events;
         result[droppableDestination.droppableId] = destClone;
